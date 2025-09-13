@@ -9,9 +9,29 @@
   </head>
   <body>
     <h1>Puppy Super Bowl</h1>
-    <form id="new-player-form"></form>
+    <form id="new-player-form">
+      <label for="name">
+        Name:
+        <input type="text" id="name" name="name" placeholder="Name" />
+      </label>
+      <label for="breed">
+        Breed:
+        <input type="text" id="breed" placeholder="Breed" name="breed" />
+      </label>
+      <label for="imageUrl">
+        Image URL:
+        <input
+          type="text"
+          id="imageUrl"
+          placeholder="Image URL"
+          name="imageUrl"
+        />
+      </label>
+      <button type="submit">Create Player</button>
+    </form>
     <main>
-      <!-- add a section for selected puppy info -->
+      <article id="single-player-container"></article>
+      <article id="players-container"></article>
       <!-- add a section for other puppy cards -->
     </main>
     <script src="./script.js"></script>

@@ -86,7 +86,6 @@ const renderAllPlayers = (playerList) => {
  * - id
  * - breed
  * - image (with alt text of the player's name)
- * - team name, if the player has one, or "Unassigned"
  *
  * The card also contains a "Back to all players" button that, when clicked,
  * will call `renderAllPlayers` to re-render the full list of players.
