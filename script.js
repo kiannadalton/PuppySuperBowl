@@ -1,15 +1,19 @@
 // Use the API_URL variable to make fetch requests to the API.
-// Replace the placeholder with your cohort name (ex: 2109-UNF-HY-WEB-PT)
-const cohortName = "YOUR COHORT NAME HERE";
-const API_URL = `https://fsa-puppy-bowl.herokuapp.com/api/${cohortName}`;
+const cohortName = "2403-ftb-et-web-pt";
+const API_URL = `https://fsa-puppy-bowl.herokuapp.com/api/${cohortName}/players`;
 
 /**
  * Fetches all players from the API.
  * @returns {Object[]} the array of player objects
  */
+//* Completed
 const fetchAllPlayers = async () => {
   try {
-    // TODO
+    const response = await fetch(API_URL);
+    const json = await response.json();
+
+    // returns the array of players instead of assigning a state.players to this array,
+    return json.data.players;
   } catch (err) {
     console.error("Uh oh, trouble fetching players!", err);
   }
@@ -33,9 +37,21 @@ const fetchSinglePlayer = async (playerId) => {
  * @param {Object} playerObj the player to add
  * @returns {Object} the player returned by the API
  */
+
+//* Completed
 const addNewPlayer = async (playerObj) => {
   try {
-    // TODO
+    await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: playerObj.name,
+        breed: playerObj.breed,
+        imageUrl: playerObj.imageUrl,
+      }),
+    });
+
+    fetchAllPlayers();
   } catch (err) {
     console.error("Oops, something went wrong with adding that player!", err);
   }
@@ -45,9 +61,13 @@ const addNewPlayer = async (playerObj) => {
  * Removes a player from the roster via the API.
  * @param {number} playerId the ID of the player to remove
  */
+//* Completed
 const removePlayer = async (playerId) => {
   try {
-    // TODO
+    await fetch(`${API_URL}/${playerId}`, {
+      method: "DELETE",
+    });
+    fetchAllPlayers;
   } catch (err) {
     console.error(
       `Whoops, trouble removing player #${playerId} from the roster!`,
@@ -77,6 +97,27 @@ const removePlayer = async (playerId) => {
  */
 const renderAllPlayers = (playerList) => {
   // TODO
+  const playersContainer = document.getElementById("players-container");
+
+  if (playerList.length <= 0) {
+    playersContainer.innerHTML = "<h3>No players available</h3>";
+    return;
+  }
+
+  // clears container and preps for player cards
+  playersContainer.innerHTML = "";
+
+  // create a div for each card. fill it with HTML for name, id, image, see details button and remove from roster
+  playerList.forEach((player) => {
+    const playerCard = document.createElement("div");
+    playerCard.classList = "player-card";
+    playerCard.innerHTML = `
+    <img class="player-img" src="${player.imageUrl}" alt="${player.name}">
+    <h3>Name: ${player.name}</h3>
+    <p>Player ID: ${player.id}</p>
+    `;
+    playersContainer.appendChild(playerCard);
+  });
 };
 
 /**
