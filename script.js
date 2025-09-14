@@ -24,9 +24,13 @@ const fetchAllPlayers = async () => {
  * @param {number} playerId
  * @returns {Object} the player object
  */
-const fetchSinglePlayer = async (playerId) => {
+const fetchSinglePlayer = async (player) => {
+  const playerId = parseInt(player.srcElement.id);
   try {
     // TODO
+    const response = await fetch(`${API_URL}/${playerId}`);
+
+    // renderSinglePlayer();
   } catch (err) {
     console.error(`Oh no, trouble fetching player #${playerId}!`, err);
   }
@@ -113,9 +117,17 @@ const renderAllPlayers = (playerList) => {
     playerCard.classList = "player-card";
     playerCard.innerHTML = `
     <img class="player-img" src="${player.imageUrl}" alt="${player.name}">
-    <h3>Name: ${player.name}</h3>
+    <h4>Name: ${player.name}</h4>
     <p>Player ID: ${player.id}</p>
+    <button class="see-details" id="${player.id}">See Details</button>
+    <button data-id="${player.id}">Remove from Roster</button>
     `;
+    //see details button
+    const seeDetails = playerCard.querySelector(".see-details");
+    seeDetails.addEventListener("click", (player) => fetchSinglePlayer(player));
+
+    //remove from roster button
+
     playersContainer.appendChild(playerCard);
   });
 };
@@ -133,7 +145,9 @@ const renderAllPlayers = (playerList) => {
  * @param {Object} player an object representing a single player
  */
 const renderSinglePlayer = (player) => {
-  // TODO
+  // taking info from fetch single player and rendering from there
+  //string ID
+  console.log(typeof player.srcElement.id);
 };
 
 /**
