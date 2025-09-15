@@ -13,7 +13,7 @@ const fetchAllPlayers = async () => {
     const json = await response.json();
 
     // returns the array of players instead of assigning a state.players to this array,
-    return json.data.players;
+    renderAllPlayers(json.data.players);
   } catch (err) {
     console.error("Uh oh, trouble fetching players!", err);
   }
@@ -45,15 +45,15 @@ const fetchSinglePlayer = async (player) => {
  */
 
 //* Completed
-const addNewPlayer = async (playerObj) => {
+const addNewPlayer = async (name, breed, imageUrl) => {
   try {
     await fetch(API_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        name: playerObj.name,
-        breed: playerObj.breed,
-        imageUrl: playerObj.imageUrl,
+        name,
+        breed,
+        imageUrl,
       }),
     });
 
@@ -73,7 +73,7 @@ const removePlayer = async (playerId) => {
     await fetch(`${API_URL}/${playerId}`, {
       method: "DELETE",
     });
-    fetchAllPlayers;
+    fetchAllPlayers();
   } catch (err) {
     console.error(
       `Whoops, trouble removing player #${playerId} from the roster!`,
@@ -101,11 +101,11 @@ const removePlayer = async (playerId) => {
  * Note: this function should replace the current contents of `<main>`, not append to it.
  * @param {Object[]} playerList - an array of player objects
  */
+//* Completed
 const renderAllPlayers = (playerList) => {
-  // TODO
   const playersContainer = document.getElementById("players-container");
 
-  if (playerList.length <= 0) {
+  if (playerList.length == 0) {
     playersContainer.innerHTML = "<h3>No players available</h3>";
     return;
   }
@@ -121,14 +121,19 @@ const renderAllPlayers = (playerList) => {
     <img class="player-img" src="${player.imageUrl}" alt="${player.name}">
     <h4>Name: ${player.name}</h4>
     <p>Player ID: ${player.id}</p>
-    <button class="see-details" id="${player.id}">See Details</button>
-    <button data-id="${player.id}">Remove from Roster</button>
+    <button class="see-details" id="${player.id}" onclick="scrollToTop()">See Details</button>
+    <button class="delete-button" data-id="${player.id}">Remove from Roster</button>
     `;
     //see details button
     const seeDetails = playerCard.querySelector(".see-details");
     seeDetails.addEventListener("click", (player) => fetchSinglePlayer(player));
 
     //remove from roster button
+    const deletePlayer = playerCard.querySelector(".delete-button");
+    deletePlayer.addEventListener("click", (event) => {
+      event.preventDefault();
+      removePlayer(player.id);
+    });
 
     playersContainer.appendChild(playerCard);
   });
@@ -179,20 +184,38 @@ const renderSinglePlayer = (player) => {
  * When the form is submitted, it should call `addNewPlayer`, fetch all players,
  * and then render all players to the DOM.
  */
+//* Completed
 const renderNewPlayerForm = () => {
-  try {
-    // TODO
-  } catch (err) {
-    console.error("Uh oh, trouble rendering the new player form!", err);
-  }
+  const form = document.getElementById("new-player-form");
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    try {
+      await addNewPlayer(
+        event.target.name.value,
+        event.target.breed.value,
+        event.target.imageUrl.value
+      );
+
+      // clears form
+      (event.target.name.value = ""),
+        (event.target.breed.value = ""),
+        (event.target.imageUrl.value = "");
+    } catch (err) {
+      console.error("Uh oh, trouble rendering the new player form!", err);
+    }
+  });
 };
+
+// forces scroll to top of page
+function scrollToTop() {
+  document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+}
 
 /**
  * Initializes the app by fetching all players and rendering them to the DOM.
  */
 const init = async () => {
-  const players = await fetchAllPlayers();
-  renderAllPlayers(players);
+  await fetchAllPlayers();
 
   renderNewPlayerForm();
 };

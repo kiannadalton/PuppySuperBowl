@@ -13,21 +13,23 @@ h1 {
   margin: 0px 0px 15px 0px;
 }
 
-h4 {
-    margin-bottom: 0;
+h4,
+p {
+  margin-top: 0;
 }
 
 form {
   display: flex;
   flex-direction: column;
   width: 50%;
-  padding: 20px;
+  padding: 20px 50px;
+  padding-top: 20px;
   border: solid 2px black;
   border-radius: 20px;
   margin: auto;
   margin-bottom: 25px;
-  background-color: rgba(11, 11, 60, 0.56);
-  color: white;
+  background-color: rgba(178, 178, 238, 0.56);
+  color: black;
 }
 
 form button {
@@ -36,6 +38,7 @@ form button {
   font-weight: bolder;
   color: rgb(114, 22, 22);
   background-color: rgb(223, 215, 215);
+  margin-top: 30px;
 }
 
 form button:hover {
@@ -45,17 +48,24 @@ form button:hover {
 
 form label {
   margin-bottom: 15px;
-  font-weight: bolder;
+  /* font-weight: bold; */
+  font-size: larger;
+}
+
+input {
+  color: black;
+  font-size: large;
+  width: 50%;
 }
 
 #single-player-card {
-  background-color: aqua;
+  background-color: rgba(167, 89, 89, 0.435);
   margin: auto;
   border: solid 2px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 30%;
+  width: 25%;
   padding: 5px;
 }
 
@@ -79,13 +89,13 @@ div.player-card {
 }
 
 .player-img {
-  width: 80%;
+  width: 60%;
   margin: 10px;
 }
 
 hr {
-    width: 90%;
-    height: 2px;
-    background-color: rgb(114, 22, 22);
-    margin-top: 20px;
+  width: 90%;
+  height: 2px;
+  background-color: rgb(114, 22, 22);
+  margin-top: 20px;
 }
