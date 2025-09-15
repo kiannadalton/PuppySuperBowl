@@ -208,7 +208,7 @@ const renderNewPlayerForm = () => {
 
 // forces scroll to top of page
 function scrollToTop() {
-  document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+  document.documentElement.scrollTop = 0;
 }
 
 /**
