@@ -13,6 +13,10 @@ h1 {
   margin: 0px 0px 15px 0px;
 }
 
+h4 {
+    margin-bottom: 0;
+}
+
 form {
   display: flex;
   flex-direction: column;
@@ -44,11 +48,23 @@ form label {
   font-weight: bolder;
 }
 
+#single-player-card {
+  background-color: aqua;
+  margin: auto;
+  border: solid 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 30%;
+  padding: 5px;
+}
+
 #players-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
   width: 90%;
+  margin: auto;
 }
 
 div.player-card {
@@ -59,9 +75,17 @@ div.player-card {
   align-items: center;
   width: 20%;
   padding: 5px;
+  background-color: rgba(167, 89, 89, 0.435);
 }
 
 .player-img {
   width: 80%;
   margin: 10px;
+}
+
+hr {
+    width: 90%;
+    height: 2px;
+    background-color: rgb(114, 22, 22);
+    margin-top: 20px;
 }

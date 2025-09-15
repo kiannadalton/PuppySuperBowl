@@ -24,13 +24,15 @@ const fetchAllPlayers = async () => {
  * @param {number} playerId
  * @returns {Object} the player object
  */
+//* Completed
 const fetchSinglePlayer = async (player) => {
   const playerId = parseInt(player.srcElement.id);
   try {
-    // TODO
     const response = await fetch(`${API_URL}/${playerId}`);
+    const json = await response.json();
+    const playerData = json.data.player;
 
-    // renderSinglePlayer();
+    renderSinglePlayer(playerData);
   } catch (err) {
     console.error(`Oh no, trouble fetching player #${playerId}!`, err);
   }
@@ -144,10 +146,32 @@ const renderAllPlayers = (playerList) => {
  * will call `renderAllPlayers` to re-render the full list of players.
  * @param {Object} player an object representing a single player
  */
+
+//* Completed
 const renderSinglePlayer = (player) => {
   // taking info from fetch single player and rendering from there
   //string ID
-  console.log(typeof player.srcElement.id);
+  const singlePlayerContainer = document.getElementById(
+    "single-player-container"
+  );
+  // Clears HTML
+  singlePlayerContainer.innerHTML = "";
+
+  singlePlayerContainer.innerHTML = `
+  <div id="single-player-card">
+  <img class="player-img" src="${player.imageUrl}" alt="${player.name}">
+    <h4>Name: ${player.name}</h4>
+    <p>Player ID: ${player.id}</p>
+    <p>Breed: ${player.breed}</p>
+    <button id="back-button">Back to all Players</button>
+    </div>
+  `;
+
+  const backButton = document.getElementById("back-button");
+  backButton.addEventListener("click", () => {
+    //clears single player card from top of screen
+    singlePlayerContainer.innerHTML = "";
+  });
 };
 
 /**
